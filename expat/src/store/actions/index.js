@@ -1,4 +1,5 @@
 import axios from "axios";
+import {axiosWithAuth} from "../../utils/axiosWithAuth";
 
 export const GET_POSTS_START = "GET_POSTS_START";
 export const GET_POSTS_SUCCESS = "GET_POSTS_SUCCESS";
@@ -42,30 +43,25 @@ export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 export const SIGNUP_FAILED = "SIGNUP_FAILED";
 
 ///CHECK LOGGED IN
-export const CHECK_LOGGED_IN_START = 'CHECK_LOGGED_IN_START';
-export const CHECK_LOGGED_IN_SUCCESS = 'CHECK_LOGGED_IN_SUCCESS';
-export const CHECK_LOGGED_IN_FAILED = 'CHECK_LOGGED_IN_FAILED';
+export const CHECK_LOGGED_IN_START = "CHECK_LOGGED_IN_START";
+export const CHECK_LOGGED_IN_SUCCESS = "CHECK_LOGGED_IN_SUCCESS";
+export const CHECK_LOGGED_IN_FAILED = "CHECK_LOGGED_IN_FAILED";
 
 export const getPosts = () => {
   return dispatch => {
     dispatch({ type: GET_POSTS_START });
-
-    return axios
+    axiosWithAuth()
       .get("https://expat-journals.herokuapp.com/api/v1/journals")
       .then(res => {
-        // sort data by most recently created posts
-        const payload = res.data.sort(
-          (a, b) => new Date(b.created_at) - new Date(a.created_at)
-        );
-
-        localStorage.setItem("posts", JSON.stringify(payload));
-
-        dispatch({ type: GET_POSTS_SUCCESS, payload });
+        console.log(res.data)
+        const payload = res.data
+        dispatch({ type: GET_POSTS_SUCCESS, payload});
       })
       .catch(err => {
+        console.log(err.response)
         const payload = err.response ? err.response.data : err;
         dispatch({ type: GET_POSTS_FAILED, payload });
-      });
+    });
   };
 };
 
@@ -105,11 +101,11 @@ export const editPost = (post, id) => {
         dispatch({ type: UPDATE_POST_SUCCESS, payload: res.data });
       })
       .catch(err => {
-        dispatch({
-          type: UPDATE_POST_FAILED,
-          payload: err.response.data.error_message
-        });
+          dispatch({
+        type: UPDATE_POST_FAILED,
+        payload: err.response.data.error_message
       });
+    });
   };
 };
 
@@ -129,6 +125,7 @@ export const deletePost = id => {
         dispatch({ type: DELETE_POST_SUCCESS, payload: res.data });
       })
       .catch(err => {
+        console.log(err.response)
         dispatch({ type: DELETE_POST_FAILED, payload: err.errorMessage });
       });
   };
@@ -156,9 +153,9 @@ export const getUserPosts = () => {
       .catch(err => {
         dispatch({
           type: GET_USER_POSTS_FAILED,
-          payload: err.response.data.error_message
-        });
+          // payload: err.response.data.error_message
       });
+    });
   };
 };
 
@@ -174,39 +171,35 @@ export function login(email, password) {
       .then(res => {
         // store user in localStorage
         localStorage.setItem("token", res.data.token);
-        localStorage.setItem("email", res.data.email);
-        localStorage.setItem("id", res.data.id);
+        localStorage.setItem("id", res.data.user.id);
 
         const payload = {
           id: res.data.id,
-          username: res.data.username
         };
 
         dispatch({ type: LOGIN_SUCCESS, payload });
       })
       .catch(err => {
-        let payload = err;
-        if (Object.keys(err.response.data).length) {
-          payload = err.response.data.errorMessage;
-        } else {
-          payload = "Please review your login information";
-        }
-        dispatch({ type: LOGIN_FAILED, payload });
-      });
+      let payload = err;
+      if (Object.keys(err.response.data).length) {
+      payload = err.response.data.errorMessage;
+      } else {
+      payload = "Please review your login information";
+      }
+      dispatch({ type: LOGIN_FAILED, payload });
+    });
   };
 }
 
 export function signup(
-  password,
-  email,
-  confirm_password,
   first_name,
-  last_name
+  last_name,
+  email,
+  password,
+  confirm_password
 ) {
-  debugger
   return dispatch => {
     dispatch({ type: SIGNUP_START });
-debugger
     return axios
       .post("https://expat-journals.herokuapp.com/api/v1/auth/signup", {
         password: password,
@@ -216,48 +209,44 @@ debugger
         last_name: last_name
       })
       .then(res => {
-        debugger
         localStorage.setItem("token", res.data.token);
-        localStorage.setItem("email", res.data.email);
-        localStorage.setItem("id", res.data.id);
+        localStorage.setItem("id", res.data.user.id);
 
         const payload = {
-          email: res.data.email,
           id: res.data.id,
           successMsg: res.statusText
         };
         dispatch({ type: SIGNUP_SUCCESS, payload });
       })
       .catch(err => {
-        debugger
+        debugger;
         const payload = err.response ? err.response.data : err;
         dispatch({ type: SIGNUP_FAILED, payload });
       });
   };
-  debugger
 }
 
-export const checkLoggedIn = () => {
-  return dispatch => {
-    dispatch({ type: CHECK_LOGGED_IN_START });
+// export const checkLoggedIn = () => {
+//   return dispatch => {
+//     dispatch({ type: CHECK_LOGGED_IN_START });
 
-    const id = localStorage.getItem("id");
-    const token = localStorage.getItem("token");
+//     const id = localStorage.getItem("id");
+//     const token = localStorage.getItem("token");
 
-    axios
-      .get(`https://expat-journal-backend.herokuapp.com/api/users/${id}`, {
-        headers: {
-          Authorization: token
-        }
-      })
-      .then(res => {
-        dispatch({ type: CHECK_LOGGED_IN_SUCCESS, payload: res.data });
-      })
-      .catch(err => {
-        dispatch({
-          type: CHECK_LOGGED_IN_FAILED,
-          payload: "Login expired! Please sign in again."
-        });
-      });
-  };
-};
+//     axios
+//       .get(`https://expat-journal-backend.herokuapp.com/api/users/${id}`, {
+//         headers: {
+//           Authorization: token
+//         }
+//       })
+//       .then(res => {
+//         dispatch({ type: CHECK_LOGGED_IN_SUCCESS, payload: res.data });
+//       })
+//       .catch(err => {
+//         dispatch({
+//         type: CHECK_LOGGED_IN_FAILED,
+//         payload: "Login expired! Please sign in again."
+//       });
+//     });
+//   };
+// };

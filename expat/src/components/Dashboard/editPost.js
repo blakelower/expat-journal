@@ -30,7 +30,6 @@ class EditPost extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-
     const { caption, location, message, imageURL } = this.state;
 
     const post = {

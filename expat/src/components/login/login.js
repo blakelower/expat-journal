@@ -12,14 +12,14 @@ class Login extends Component {
     e.preventDefault();
     const { email, password } = this.state;
     this.props
-      .signup(email, password)
+      .login(email, password)
       .then(() => {
         this.setState({
           email: "",
           password: ""
         });
         setTimeout(() => {
-          //   this.props.history.push("/dashboard");
+            this.props.history.push("/dashboard");
         }, 1000);
       })
       .catch(err => console.log(err));
@@ -46,9 +46,9 @@ class Login extends Component {
             <form onSubmit={e => this.onSubmit(e)}>
               <TextInput
                 onChange={this.onChange}
-                type="email"
+                type="text"
                 label="Email"
-                name="emsil"
+                name="email"
                 value={email}
               />
               <TextInput

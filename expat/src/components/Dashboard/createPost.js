@@ -104,7 +104,6 @@ class CreatePost extends Component {
               required
               validate
             />
-
             <Textarea
               s={12}
               type="text"
@@ -115,7 +114,6 @@ class CreatePost extends Component {
               required
               validate
             />
-
             <Button type="submit">Create Post</Button>
           </Row>
         </form>

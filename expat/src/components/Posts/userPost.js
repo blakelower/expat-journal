@@ -135,12 +135,10 @@ function UserPosts(props) {
         <div className="post-grid">
           <div className="no-posts">
             <h4>You haven't created any posts yet!</h4>
-            <Button
-              onClick={() => props.history.push("/dashboard/posts/add")}
-              large
-            >
+            {/* <Button
+              onClick={() => props.history.push("/dashboard/posts/add")}large>
               Create Post
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>

@@ -6,12 +6,12 @@ import PrivateRoute from '../PrivateRoute/privateroute';
 import UserPosts from '../Posts/userPost';
 import CreatePost from './createPost'
 import EditPost from './editPost'
-import { getUserPosts, checkLoggedIn } from '../../store/actions'
+import { getPosts } from '../../store/actions'
 
 class Dashboard extends Component {
   componentDidMount() {
     const id = localStorage.getItem('id')
-    this.props.getUserPosts(id)
+    this.props.getPosts()
   }
 
   render() {
@@ -79,13 +79,12 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => ({
   userId: state.authReducer.id,
-  email: state.authReducer.email,
   posts: state.postsReducer.userPosts
 })
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { getUserPosts, checkLoggedIn }
+    { getPosts }
   )(Dashboard)
 )

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getPosts, checkLoggedIn } from "./store/actions"
+import { getPosts } from "./store/actions"
 import Login from "./components/login/login";
 import Signup from "./components/signup/signup";
 import Dashboard from "./components/Dashboard/dashboard";
@@ -17,7 +17,6 @@ class App extends Component {
   componentDidMount() {
     M.AutoInit()
     if (localStorage.getItem('token')) {
-      this.props.checkLoggedIn()
     }
     this.props.getPosts()
   }
@@ -49,7 +48,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   getPosts,
-  checkLoggedIn
 }
 
 export default connect(
