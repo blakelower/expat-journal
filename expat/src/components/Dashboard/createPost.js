@@ -114,7 +114,7 @@ class CreatePost extends Component {
               required
               validate
             />
-            <Button type="submit">Create Post</Button>
+            <Button type="submit"onClick={() => this.props.history.push('/dashboard')}>Create Post</Button>
           </Row>
         </form>
       </div>

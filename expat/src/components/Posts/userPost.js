@@ -44,7 +44,9 @@ function UserPosts(props) {
                         src={post.imageURL}
                         alt={post.title}
                       />
-                      <span className="card-title activator">{post.caption}</span>
+                      <span className="card-title activator">
+                        {post.caption}
+                      </span>
 
                       <Modal
                         header="Are you sure?"
@@ -76,9 +78,7 @@ function UserPosts(props) {
                     <div>
                       <header>
                         <h6>{post.caption}</h6>
-                        <span>
-                          {post.location}
-                        </span>
+                        <span>{post.location}</span>
                       </header>
                       <p>{post.message}</p>
                       <footer>
@@ -115,8 +115,6 @@ function UserPosts(props) {
       </div>
     );
   }
-
-  // if userPosts is 0 and state isLoading is true then display the loading indicator
   if (props.isLoading) {
     return (
       <div className="user-post-list">

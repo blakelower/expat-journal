@@ -42,11 +42,6 @@ export const SIGNUP_START = "SIGNUP_START";
 export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 export const SIGNUP_FAILED = "SIGNUP_FAILED";
 
-///CHECK LOGGED IN
-export const CHECK_LOGGED_IN_START = "CHECK_LOGGED_IN_START";
-export const CHECK_LOGGED_IN_SUCCESS = "CHECK_LOGGED_IN_SUCCESS";
-export const CHECK_LOGGED_IN_FAILED = "CHECK_LOGGED_IN_FAILED";
-
 export const getPosts = () => {
   return dispatch => {
     dispatch({ type: GET_POSTS_START });
@@ -225,28 +220,3 @@ export function signup(
       });
   };
 }
-
-// export const checkLoggedIn = () => {
-//   return dispatch => {
-//     dispatch({ type: CHECK_LOGGED_IN_START });
-
-//     const id = localStorage.getItem("id");
-//     const token = localStorage.getItem("token");
-
-//     axios
-//       .get(`https://expat-journal-backend.herokuapp.com/api/users/${id}`, {
-//         headers: {
-//           Authorization: token
-//         }
-//       })
-//       .then(res => {
-//         dispatch({ type: CHECK_LOGGED_IN_SUCCESS, payload: res.data });
-//       })
-//       .catch(err => {
-//         dispatch({
-//         type: CHECK_LOGGED_IN_FAILED,
-//         payload: "Login expired! Please sign in again."
-//       });
-//     });
-//   };
-// };

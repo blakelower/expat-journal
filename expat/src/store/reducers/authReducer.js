@@ -5,10 +5,7 @@ import {
   LOGOUT,
   SIGNUP_START,
   SIGNUP_SUCCESS,
-  SIGNUP_FAILED,
-  CHECK_LOGGED_IN_START,
-  CHECK_LOGGED_IN_SUCCESS,
-  CHECK_LOGGED_IN_FAILED
+  SIGNUP_FAILED
 } from "../actions";
 
 const initialState = {
@@ -82,36 +79,6 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         regErr: action.payload,
         regSuccess: null
-      };
-    }
-    case CHECK_LOGGED_IN_START: {
-      return {
-        ...state,
-        isLoggedInErr: null
-      };
-    }
-    case CHECK_LOGGED_IN_SUCCESS: {
-      const { username, id } = action.payload;
-      return {
-        ...state,
-        username,
-        id,
-        isLoggedIn: true,
-        isLoggedInErr: null
-      };
-    }
-    case CHECK_LOGGED_IN_FAILED: {
-      // Make sure localStorage is cleared if login check fails or token is expired
-      localStorage.removeItem("id");
-      localStorage.removeItem("email");
-      localStorage.removeItem("token");
-
-      return {
-        ...state,
-        email: "",
-        id: "",
-        isLoggedIn: false,
-        isLoggedInErr: action.payload
       };
     }
     default:

@@ -15,17 +15,17 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { location, match, email, history } = this.props
+    const { location, match, history } = this.props
     const { path } = match
     const { pathname } = location
 
     return (
       <div className="dashboard">
         <aside className="dashboard-sidebar">
-          <header className="sidebar-title">
+          {/* <header className="sidebar-title">
             <h3>Email: {email}</h3>
             <hr />
-          </header>
+          </header> */}
 
           <section className="sidebar-actions">
             <Button

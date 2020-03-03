@@ -8,6 +8,7 @@ import Signup from "./components/signup/signup";
 import Dashboard from "./components/Dashboard/dashboard";
 import PrivateRoute from "./components/PrivateRoute/privateroute";
 import PostList from './components/Posts/postList';
+import Home from './components/Home';
 
 //style
 import M from "materialize-css";
@@ -24,6 +25,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <Route exact path="/" component={Home}/>
         <Route
           exact
           path="/posts"

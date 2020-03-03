@@ -24,11 +24,11 @@ class Login extends Component {
       })
       .catch(err => console.log(err));
   };
-  onChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
+  // onChange = e => {
+  //   this.setState({
+  //     [e.target.name]: e.target.value
+  //   });
+  // };
 
   onChange = e => {
     this.setState({
